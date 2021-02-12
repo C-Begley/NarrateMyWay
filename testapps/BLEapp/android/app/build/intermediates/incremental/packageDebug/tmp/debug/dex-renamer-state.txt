@@ -1,0 +1,4 @@
+#Thu Feb 11 18:14:15 GMT 2021
+base.0=/home/conorbegley/code/Uni/NarrateMyWay/testapps/BLEapp/android/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
