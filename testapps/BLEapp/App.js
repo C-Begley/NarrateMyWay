@@ -15,41 +15,35 @@ class App extends Component {
     super();
     this.manager = new BleManager();
     this.state = {
-    device: "",
-    rssi : 0,
     count : 0, 
-    blestate : ""
+    name_list : [],
+    addr_list : [],
+    error : "No Error"
   }
 
   const subscription = this.manager.onStateChange((state) => {
     if (state === 'PoweredOn') {
-        this.scanAndConnect();
         subscription.remove();
     }
 }, true);
 }
-
 pressButton () {
-  this.setState({count: this.state.count + 1})
+  this.setState({name_list : []});
+  this.setState({addr_list : []});
+  this.setState({error : "No Error"});
   this.scanAndConnect()
+  this.setState({count: this.state.count + 1})
 }
 scanAndConnect() {
   this.manager.startDeviceScan(null, null, (error, device) => {
       if (error) {
           // Handle error (scanning will be stopped automatically)
-          this.setState({device: error.message})
+          this.setState({error: error.message})
           this.manager.stopDeviceScan();
           return
       }
 
-      // Check if it is a device you are looking for based on advertisement data
-      // or other criteria.
-      if (device.id === "DC:A6:32:CD:4C:3F"){
-        this.setState({rssi: device.rssi})
-        this.setState({device: device.id})     
-          // Stop scanning as it's not necessary if you are scanning for one device.
-          this.manager.stopDeviceScan();
-      }
+        this.addBLEDevice(device);
 
           
           // Proceed with connection.
@@ -57,26 +51,34 @@ scanAndConnect() {
   });
 }
 
+ addBLEDevice(device){
+   if (! this.state.addr_list.includes(device.id)) {
+      l = this.state.addr_list;
+      l.push(device.id);
+      this.setState({addr_list : l});
+   }
+   if (! this.state.name_list.includes(device.name)) {
+      l = this.state.name_list;
+      l.push(device.name);
+      this.setState({name_list : l});
+   }
+}
  render() {
     return (
       <View>
-          <Text>
-            You scanned { this.state.device } 
-            </Text>
-          <Text>
-          Distance {this.state.rssi}
-          </Text>
-          <Text>
-          State {this.state.blestate}
-          </Text>
-          <Button
-        title="Scan"
-        onPress={() => this.pressButton()}
-      />
-      <Text>
-          Button Count {this.state.count}
-          </Text>
-        </View>
+          <Button title="Scan"onPress={() => this.pressButton()}/>
+          <Text>Scan Count {this.state.count}</Text>
+          <Text>----- </Text>
+          <Text>Names</Text>
+          {this.state.name_list.map((device,index) => (<Text key={index}>{device}</Text>))}
+          <Text>----- </Text>
+          <Text/>
+          <Text>----- </Text>
+          <Text>IDs</Text>
+          {this.state.addr_list.map((device,index) => (<Text key={index}>{device}</Text>))}
+          <Text>-----</Text>
+          <Text>Error : {this.state.error}</Text>
+      </View>
     )
   }
 }
