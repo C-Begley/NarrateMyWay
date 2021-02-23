@@ -6,6 +6,7 @@ import DefaultColors from './constants/DefaultColors';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
+import BLE from './backend/ble';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
