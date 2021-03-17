@@ -4,20 +4,16 @@ import {
   beaconOutOfRange
 } from '../src/state/bluetooth/actions';
 import { useDispatch } from 'react-redux';
+import getExpansionPackMetaMAC from './database';
 
 const THRESHOLD = -70; // in dB
 const TIMEOUT = 2000; // in ms
 
 const EXPANSION_PACK = 'NMW:1-EXP-AND';
 
-async function downloadExpansion(device: Device) {
-  console.log('Expand beacon found');
-}
-
 const scanForBeacons = (manager: BleManager) => {
   const dispatch = useDispatch();
   let devices: Device[] = [];
-
   setInterval(() => {
     devices = [];
     setTimeout(() => {
@@ -32,7 +28,9 @@ const scanForBeacons = (manager: BleManager) => {
           if (closest.rssi && closest.name) {
             if (closest.rssi > THRESHOLD) {
               if (closest.name.toUpperCase() == EXPANSION_PACK) {
-                downloadExpansion(closest);
+                getExpansionPackMetaMAC(closest.id).then((res) => {
+                  console.log(res);
+                });
               } else {
                 dispatch(beaconDetected(closest.name, closest.id));
               }
@@ -52,7 +50,6 @@ const scanForBeacons = (manager: BleManager) => {
       manager.stopDeviceScan();
       console.log(error.reason);
     }
-
     if (device && device.name && device.rssi) {
       if (device.name.toUpperCase().startsWith('NMW:')) {
         if (device.rssi > THRESHOLD) {
