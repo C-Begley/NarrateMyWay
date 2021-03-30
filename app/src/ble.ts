@@ -83,7 +83,6 @@ function startScan(manager: BleManager) {
 }
 
 const scanForBeacons = (manager: BleManager) => {
-  checkAllPermissions();
   const dispatch = useDispatch();
 
   setInterval(() => {
