@@ -34,8 +34,8 @@ const checkAndGetAllPermissions = () => {
     ];
   } else if (Platform.OS == 'ios') {
     perms = [
-      PERMISSIONS.IOS.LOCATION_ALWAYS,
-      PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL
+      PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+      // PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL
     ];
   }
   checkAllPermissions(perms).then((reqs) => {
