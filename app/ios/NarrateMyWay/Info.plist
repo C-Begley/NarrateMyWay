@@ -65,15 +65,11 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Location Permissions Required</string>
+	<string>Location permissions are required to detect beacons near you</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Location Permissions Required</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Bluetooth Permissions Required</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Bluetooth Permissions Required</string>
+	<string>Location permissions are required to detect beacons near you</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
